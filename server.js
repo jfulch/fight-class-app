@@ -20,7 +20,9 @@ app.use(bodyParser.json())
 app.use(express.static('public'))
 
 app.listen(3000, function() {
+  //not needed, just testing
   console.log('listening on 3000')
+  //needed to .env variable logic
   require('dotenv').config()
 })
 
@@ -58,7 +60,8 @@ MongoClient.connect(connectionString, (err, client) => {
   })
 
   app.get('/', (req, res) => {
-    db.collection('classTracker').find().toArray()
+    //find all records, sort by date ascending
+    db.collection('classTracker').find().sort({classDate: 'asc'}).toArray()
       .then(results => {
         res.render('index.ejs', {
           classTracker: results
