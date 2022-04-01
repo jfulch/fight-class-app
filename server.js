@@ -22,7 +22,6 @@ app.use(express.static('public'))
 app.listen(3000, function() {
   console.log('listening on 3000')
   require('dotenv').config()
-  console.log(process.env.MONGO_STRING) // remove this after you've confirmed it working
 })
 
 ///Navigates to Login Page
