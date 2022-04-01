@@ -2,8 +2,12 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser')
+//sets up mongo database connection
 const MongoClient = require('mongodb').MongoClient;
-const connectionString = 'REMOVED';
+//sets up .env file for sensative variables.
+const dotenv = require('dotenv').config()
+//sets connection string varaible in .env file
+const connectionString = process.env.MONGO_STRING;
 
 //Tells app to use ejs
 app.set('view engine', 'ejs')
@@ -17,6 +21,8 @@ app.use(express.static('public'))
 
 app.listen(3000, function() {
   console.log('listening on 3000')
+  require('dotenv').config()
+  console.log(process.env.MONGO_STRING) // remove this after you've confirmed it working
 })
 
 ///Navigates to Login Page
