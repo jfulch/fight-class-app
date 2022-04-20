@@ -2,7 +2,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head><%- include('./partials/head'); %></head>
+<head>
+  <%- include('./partials/head'); %>
+</head>
 
 <header>
   <%- include('./partials/header'); %>
@@ -13,85 +15,112 @@
     <div class="row">
       <div class="col">
         <%# Table For Entering Classes %>
-        <h2>Enter Class</h2>
-        <form action="/classTracker" method="POST">
-          <div class="form-group">
-            <p>
-              <label for="name">Student Name:</label>
-              <input type="text" placeholder="Joe Smith" name="name" id="name" class="form-control" required/>
-            </p>
-            <p>
-              <label for="className">Class Name:</label>
-              <select name="className" id="className" class="form-control">
-                <option value="101">101</option>
-                <option value="All Levels">All Levels</option>
-                <option value="Competition">Competition</option>
-              </select>
-            </p>
-            <p>
-              <label for="classDate">Class Date:</label>
-              <input type="date" placeholder="" name="classDate" class="form-control" required/>
-            </p>
-            <p>
-              <label for="classNotes">Class Notes:</label>
-              <input type="text" placeholder="notes" name="classNotes" id="classNotes" class="form-control" />
-            </p>
-            <button type="submit">Submit</button>
-          </div>
-        </form>
-      </div> <%# End of col1 %>
-      <div class="col">
-        <div class=row class="col">
-          <h2>Darth Vadar invades!</h2>
-          <p>
-            Replace first Yoda's class record with a class record posted by Darth Vadar
-          </p>
-          <button id="update-button">Replace Yoda's Class Record</button>
-        </div>
-        <div class=row class="col">
-          <h2>Delete A Class</h2>
-          <p>
-            Delete one of Darth Vadar's class records. Does nothing if there are no more Darth
-            Vadar's class records.
-          </p>
-          <button id="delete-button">Delete Darth Vadar's Class Record</button>
-        </div>
+          <h2>Enter Class</h2>
+          <form action="/classTracker" method="POST">
+            <div class="form-group">
+              <p>
+                <label for="name">Student Name:</label>
+                <input type="text" placeholder="Joe Smith" name="name" id="name" class="form-control" required />
+              </p>
+              <p>
+                <label for="className">Class Name:</label>
+                <select name="className" id="className" class="form-control">
+                  <option value="101">101</option>
+                  <option value="All Levels">All Levels</option>
+                  <option value="Competition">Competition</option>
+                </select>
+              </p>
+              <p>
+                <label for="classDate">Class Date:</label>
+                <input type="date" placeholder="" name="classDate" class="form-control" required />
+              </p>
+              <p>
+                <label for="classNotes">Class Notes:</label>
+                <input type="text" placeholder="notes" name="classNotes" id="classNotes" class="form-control" />
+              </p>
+              <button type="submit">Submit</button>
+            </div>
+          </form>
       </div>
-      <div id="message"></div>
-    </div> <%# End of row1 %>
-    <div class="row">
-      <div class="col">
-        <%# Table For Classes Attended %>
-        <h2>Classes Attended</h2>
-        <table class="table table-bordered table-hover table-inverse table-striped" id="sortTable">
-          <thead class="thead-dark">
-            <tr style="text-align:center">
-              <th style="width: 25%;">Name</th>
-              <th style="width: 15%;">Class Name</th>
-              <th style="width: 15%;">Class Date</th>
-              <th style="width: 45%;">Class Notes</th>
-            </tr>
-          </thead>
-          <!-- Loop through class records -->
-          <% for(var i = 0; i < classTracker.length; i++) {%>
-          <tbody>
-            <tr>
-              <td><%= classTracker[i].name %></td>
-              <td><%= classTracker[i].className %></td>
-              <td style="text-align:center"><%= classTracker[i].classDate %></td>
-              <td><%= classTracker[i].classNotes %></td>
-            </tr>
-          </tbody>
-          <% } %>
-        </table>
-      </div><%# End of col %>
-    </div><%# End of row %>
+      <%# End of col1 %>
+        <div class="col">
+          <div class=row class="col">
+            <h2>Darth Vadar invades!</h2>
+            <p>
+              Replace first Yoda's class record with a class record posted by Darth Vadar
+            </p>
+            <button id="update-button">Replace Yoda's Class Record</button>
+          </div>
+          <div class=row class="col">
+            <h2>Delete A Class</h2>
+            <p>
+              Delete one of Darth Vadar's class records. Does nothing if there are no more Darth
+              Vadar's class records.
+            </p>
+            <button id="delete-button">Delete Darth Vadar's Class Record</button>
+          </div>
+          <div class="col">
+            <div id="message"></div>
+          </div>
+        </div>
+        <%# End of row1 %>
+          <div class="row">
+            <div class="col">
+              <%# Table For Classes Attended %>
+                <h2>Classes Attended</h2>
+                <table class="table table-bordered table-hover table-inverse table-striped" id="sortTable">
+                  <thead class="thead-dark">
+                    <tr style="text-align:center">
+                      <th style="width: 5%;"></th>
+                      <th style="width: 20%;">Name</th>
+                      <th style="width: 15%;">Class Name</th>
+                      <th style="width: 15%;">Class Date</th>
+                      <th style="width: 45%;">Class Notes</th>
+                    </tr>
+                  </thead>
+                  <!-- Loop through class records -->
+                  <% for(var i=0; i < classTracker.length; i++) {%>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <%= i+1 %>
+                        </td>
+                        <td>
+                          <%= classTracker[i].name %>
+                        </td>
+                        <td>
+                          <%= classTracker[i].className %>
+                        </td>
+                        <td style="text-align:center">
+                          <%= classTracker[i].classDate %>
+                        </td>
+                        <td>
+                          <%= classTracker[i].classNotes %>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <% } %>
+                </table>
+            </div>
+            <%# End of col %>
+          </div>
+          <%# End of row %>
+    </div>
+    <%# End of row1 %>
+      <div class="row">
+      </div>
+      <%# End of row2 %>
+        <div class="row">
+          <div class="col">
+            <h2>Class Stats</h2>
+          </div>
+        </div>
   </div>
-  <div class="row">
-  </div> <%# End of row2 %>
-  </div><%# End of container %>
-  <div class="spacing-buff"></div>
-  <footer class="footer"><%- include('./partials/footer'); %></footer>
+  <%# End of container %>
+    <div class="spacing-buff"></div>
+    <footer class="footer">
+      <%- include('./partials/footer'); %>
+    </footer>
 </body>
 
 </html>
