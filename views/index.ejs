@@ -63,51 +63,50 @@
             <div id="message"></div>
           </div>
         </div>
-        <%# End of row1 %>
-          <div class="row">
-            <div class="col">
-              <%# Table For Classes Attended %>
-                <h2>Classes Attended</h2>
-                <table class="table table-bordered table-hover table-inverse table-striped" id="sortTable">
-                  <thead class="thead-dark">
-                    <tr style="text-align:center">
-                      <th style="width: 5%;"></th>
-                      <th style="width: 20%;">Name</th>
-                      <th style="width: 15%;">Class Name</th>
-                      <th style="width: 15%;">Class Date</th>
-                      <th style="width: 45%;">Class Notes</th>
-                    </tr>
-                  </thead>
-                  <!-- Loop through class records -->
-                  <% for(var i=0; i < classTracker.length; i++) {%>
-                    <tbody>
-                      <tr>
-                        <td>
-                          <%= i+1 %>
-                        </td>
-                        <td>
-                          <%= classTracker[i].name %>
-                        </td>
-                        <td>
-                          <%= classTracker[i].className %>
-                        </td>
-                        <td style="text-align:center">
-                          <%= classTracker[i].classDate %>
-                        </td>
-                        <td>
-                          <%= classTracker[i].classNotes %>
-                        </td>
-                      </tr>
-                    </tbody>
-                    <% } %>
-                </table>
-            </div>
-            <%# End of col %>
-          </div>
           <%# End of row %>
     </div>
     <%# End of row1 %>
       <div class="row">
+        <div class="row">
+          <div class="col">
+            <%# Table For Classes Attended %>
+              <h2>Classes Attended</h2>
+              <table class="table table-bordered table-hover table-inverse table-striped" id="sortTable">
+                <thead class="thead-dark">
+                  <tr style="text-align:center">
+                    <th style="width: 5%;"></th>
+                    <th style="width: 20%;">Name</th>
+                    <th style="width: 15%;">Class Name</th>
+                    <th style="width: 15%;">Class Date</th>
+                    <th style="width: 45%;">Class Notes</th>
+                  </tr>
+                </thead>
+                <!-- Loop through class records -->
+                <% for(var i=0; i < classTracker.length; i++) {%>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <%= i+1 %>
+                      </td>
+                      <td>
+                        <%= classTracker[i].name %>
+                      </td>
+                      <td>
+                        <%= classTracker[i].className %>
+                      </td>
+                      <td style="text-align:center">
+                        <%= classTracker[i].classDate %>
+                      </td>
+                      <td>
+                        <%= classTracker[i].classNotes %>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <% } %>
+              </table>
+          </div>
+          <%# End of col %>
+        </div>
       </div>
       <%# End of row2 %>
         <div class="row">

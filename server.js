@@ -47,26 +47,43 @@ MongoClient.connect(connectionString, (err, client) => {
 
   //get data from db on class stats page
   app.get('/classStats', (req, res) => {
-    /* db.collection('classTracker').countDocuments()
+    //find all records, sort by date ascending
+    classCollection.find().toArray()
       .then(results => {
-        res.render('classStats.ejs', {
-          totalClassCount: results
-        })
-      }).catch(error => console.error(error)) */
+        console.log(results)
+        var x101Class = 0;
+        var compClass = 0;
+        var allLevclass = 0;
+        for (var i = 0; i < results.length; i++) {
+          if (results[i].className == "101") {
+            x101Class = x101Class + 1
+          } else if (results[i].className == "Competition") {
+            compClass = compClass + 1
+          } else if (results[i].className == "All Levels") {
+            allLevclass = allLevclass + 1
+          }
+        }
+        console.log('total calsses: ' + results.length)
+        console.log('101 class count: ' + x101Class)
+        console.log('Comp count: ' + compClass)
+        console.log('All Levels class count: ' + allLevclass)
 
-    db.collection('classTracker').findOne({ "classAttended": "101" })
-    .then(results => {
         res.render('classStats.ejs', {
-          class101Count: results
+          classTracker: results,
+          x101Class: x101Class,
+          compClass: compClass,
+          allLevclass: allLevclass,
+          totalClassCount: results.length
         })
-      }).catch(error => console.error(error))
+      })
+      .catch(error => console.error(error))
 
   })
 
   //get data for HOME/Index page
   app.get('/', (req, res) => {
     //find all records, sort by date ascending
-    db.collection('classTracker').find().sort({ classDate: 'asc' }).toArray()
+    classCollection.find().sort({ classDate: 'asc' }).toArray()
       .then(results => {
         res.render('index.ejs', {
           classTracker: results

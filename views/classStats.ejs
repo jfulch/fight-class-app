@@ -13,9 +13,29 @@
   <h1>Class Stats</h1>
   <body>
 
-    <p>Number of Classes Attended: <%= class101Count; %></p>
-    <p>Number of 101 Classes Attended: <%= class101Count; %></p>
-
+    <table>
+        <tr>
+            <th>Class Name</th>
+            <th>Times Attended</th>
+        </tr>
+        <tr>
+            <td>101 Class</td>
+            <td><%= totalClassCount; %></td>
+        </tr>
+        <tr>
+            <td>All Levels</td>
+            <td><%= x101Class; %></td>
+        </tr>
+        <tr>
+            <td>Competitions</td>
+            <td><%= compClass; %></td>
+        </tr>
+        <tr>
+            <td>Total Classes Attended</td>
+            <td><%= totalClassCount; %></td>
+        </tr>
+    </table>
+    
   </body>
   <footer>
     <%- include('./partials/footer'); %>
