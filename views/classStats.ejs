@@ -10,8 +10,15 @@
   <%- include('./partials/header'); %>
   </header>
 
-  <h1>Class Stats</h1>
+  
   <body>
+    <h1>Class Stats</h1>
+
+    <form method="GET" action="/findFighterStats">
+      <label for="stat-search-val">Filter Stats:</label>
+      <input type="text" placeholder="Fighter Name" id="stat-search-val" name="fighter">
+      <button id="search-button">Search</button>
+    </form>
 
     <table>
         <tr>
@@ -20,11 +27,11 @@
         </tr>
         <tr>
             <td>101 Class</td>
-            <td><%= totalClassCount; %></td>
+            <td><%= x101Class; %></td>
         </tr>
         <tr>
             <td>All Levels</td>
-            <td><%= x101Class; %></td>
+            <td><%= allLevclass; %></td>
         </tr>
         <tr>
             <td>Competitions</td>

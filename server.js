@@ -3,12 +3,19 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const res = require('express/lib/response');
+//references my tools js file
+const tools = require('./public/js/tools');
 //sets up mongo database connection
 const MongoClient = require('mongodb').MongoClient;
 //sets up .env file for sensative variables.
 const dotenv = require('dotenv').config()
 //sets connection string varaible in .env file
 const connectionString = process.env.MONGO_STRING;
+
+var passport = require('passport');
+var LocalStrategy = require('passport-local');
+var crypto = require('crypto');
+
 
 //Tells app to use ejs
 app.set('view engine', 'ejs')
@@ -47,29 +54,13 @@ MongoClient.connect(connectionString, (err, client) => {
 
   //get data from db on class stats page
   app.get('/classStats', (req, res) => {
-    //find all records, sort by date ascending
     classCollection.find().toArray()
       .then(results => {
-        console.log(results)
-        var x101Class = 0;
-        var compClass = 0;
-        var allLevclass = 0;
-        for (var i = 0; i < results.length; i++) {
-          if (results[i].className == "101") {
-            x101Class = x101Class + 1
-          } else if (results[i].className == "Competition") {
-            compClass = compClass + 1
-          } else if (results[i].className == "All Levels") {
-            allLevclass = allLevclass + 1
-          }
-        }
-        console.log('total calsses: ' + results.length)
-        console.log('101 class count: ' + x101Class)
-        console.log('Comp count: ' + compClass)
-        console.log('All Levels class count: ' + allLevclass)
-
+        x101Class = tools.getClassesAttended(results, "101")
+        compClass = tools.getClassesAttended(results, "Competition")
+        allLevclass = tools.getClassesAttended(results, "All Levels")
+        
         res.render('classStats.ejs', {
-          classTracker: results,
           x101Class: x101Class,
           compClass: compClass,
           allLevclass: allLevclass,
@@ -77,7 +68,23 @@ MongoClient.connect(connectionString, (err, client) => {
         })
       })
       .catch(error => console.error(error))
+  })
 
+  //API call on stat's page to get specific fighter stats
+  app.get('/findFighterStats', (req, res) => {
+    classCollection.find({name: req.query.fighter}).toArray().then(results => {
+      x101Class = tools.getClassesAttended(results, "101")
+      compClass = tools.getClassesAttended(results, "Competition")
+      allLevclass = tools.getClassesAttended(results, "All Levels")
+      
+      res.render('classStats.ejs', {
+        totalClassCount: results.length,
+        x101Class: x101Class,
+        compClass: compClass,
+        allLevclass: allLevclass
+      })
+    })
+      .catch(error => console.error(error))
   })
 
   //get data for HOME/Index page
@@ -111,7 +118,9 @@ MongoClient.connect(connectionString, (err, client) => {
     }, {
       $set: {
         name: req.body.name,
-        classNotes: req.body.classNotes
+        classNotes: req.body.classNotes,
+        className: req.body.className,
+        classDate: req.body.classDate
       }
     }, {
       upsert: true

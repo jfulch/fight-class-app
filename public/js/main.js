@@ -2,6 +2,7 @@
 const update = document.querySelector('#update-button')
 const deleteButton = document.querySelector('#delete-button')
 const messageDiv = document.querySelector('#message')
+var currentTime = new Date();
 
 update.addEventListener('click', _ => {
   // logic for the replace button
@@ -11,8 +12,10 @@ update.addEventListener('click', _ => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        name: 'Darth Vadar',
-        classNotes: 'I find your lack of faith distrubing.'
+        name: 'Jesse Fulcher',
+        className: '101',
+        classDate: currentTime.toISOString().split('T')[0],
+        classNotes: 'This was auto added.'
       })
     })
     //checks for response back from app.js
