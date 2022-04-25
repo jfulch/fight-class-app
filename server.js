@@ -46,6 +46,11 @@ MongoClient.connect(connectionString, (err, client) => {
     console.log('login link')
     res.render('login')
   })
+  //navigates to register page
+  app.get('/register', (req, res) => {
+    console.log('register page')
+    res.render('register')
+  })
   ///Navigates to User Page
   app.get('/user', (req, res) => {
     console.log('user link')
