@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/css/master.css">
+    <title>BJJ Tracking App - User List</title>
+    <%- include('./partials/head'); %>
+</head>
+<header>
+    <%- include('./partials/header'); %>
+</header>
+
+
+<body>
+    <h1>User List</h1>
+
+    <!-- Loop through class records -->
+    <table class="table table-bordered table-hover table-inverse table-striped" id="sortTable">
+        <thead class="thead-dark">
+          <tr style="text-align:center">
+            <th style=""></th>
+            <th style="">First Name</th>
+            <th style="">Last Name</th>
+            <th style="">Email</th>
+            <th style="">Belt Rank</th>
+          </tr>
+        </thead>
+    <% for(var i=0; i < users.length; i++) {%>
+        <tbody>
+            <tr>
+                <td>
+                    <%= i+1 %>
+                </td>
+                <td>
+                    <%= users[i].firstName %>
+                </td>
+                <td>
+                    <%= users[i].lastName %>
+                </td>
+                <td style="text-align:center">
+                    <%= users[i].email %>
+                </td>
+                <td>
+                    <%= users[i].belt %>
+                </td>
+            </tr>
+        </tbody>
+        <% } %>
+    </table>
+</body>
+<footer>
+    <%- include('./partials/footer'); %>
+</footer>
+
+</html>

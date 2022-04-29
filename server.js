@@ -11,11 +11,12 @@ const MongoClient = require('mongodb').MongoClient;
 const dotenv = require('dotenv').config()
 //sets connection string varaible in .env file
 const connectionString = process.env.MONGO_STRING;
+//configure 'session' stuff
+const session = require('express-session');
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
 var crypto = require('crypto');
-
 
 //Tells app to use ejs
 app.set('view engine', 'ejs')
@@ -40,22 +41,27 @@ MongoClient.connect(connectionString, (err, client) => {
   console.log('Connected to Database')
   const db = client.db('userDB')
   const classCollection = db.collection('classTracker')
+  const userCollection = db.collection('user')
 
   ///Navigates to Login Page
   app.get('/login', (req, res) => {
-    console.log('login link')
-    res.render('login')
+    res.render('login', {
+      message: null
+    })
   })
   //navigates to register page
   app.get('/register', (req, res) => {
-    console.log('register page')
     res.render('register')
   })
   ///Navigates to User Page
   app.get('/user', (req, res) => {
-    console.log('user link')
     res.render('user')
   })
+  ///Navigates to User Page
+  app.get('/confirmation', (req, res) => {
+    res.render('confirmation')
+  })
+
 
   //get data from db on class stats page
   app.get('/classStats', (req, res) => {
@@ -64,7 +70,7 @@ MongoClient.connect(connectionString, (err, client) => {
         x101Class = tools.getClassesAttended(results, "101")
         compClass = tools.getClassesAttended(results, "Competition")
         allLevclass = tools.getClassesAttended(results, "All Levels")
-        
+
         res.render('classStats.ejs', {
           x101Class: x101Class,
           compClass: compClass,
@@ -77,11 +83,11 @@ MongoClient.connect(connectionString, (err, client) => {
 
   //API call on stat's page to get specific fighter stats
   app.get('/findFighterStats', (req, res) => {
-    classCollection.find({name: req.query.fighter}).toArray().then(results => {
+    classCollection.find({ name: req.query.fighter }).toArray().then(results => {
       x101Class = tools.getClassesAttended(results, "101")
       compClass = tools.getClassesAttended(results, "Competition")
       allLevclass = tools.getClassesAttended(results, "All Levels")
-      
+
       res.render('classStats.ejs', {
         totalClassCount: results.length,
         x101Class: x101Class,
@@ -100,6 +106,45 @@ MongoClient.connect(connectionString, (err, client) => {
         res.render('index.ejs', {
           classTracker: results
         })
+      })
+      .catch(error => console.error(error))
+  })
+
+  //Navigates to User List
+  app.get('/userList', (req, res) => {
+    userCollection.find().toArray().then(results => {
+      res.render('userList', {
+        users: results
+      })
+    })
+  })
+
+  //login to app - validate password
+  app.post('/login', (req, res) => {
+    userCollection.find({ email: req.body.email }).toArray().then(results => {
+      var attempt = tools.encrypt(req.body.password).encryptedData;
+      var stored = results[0].password;
+      console.log(attempt);
+      console.log(stored);
+      if (attempt == stored) {
+        res.redirect('/classStats')
+      } else {
+        res.render('login', {
+          message: 'Incorrect Password'
+        })
+      }
+    })
+      .catch(error => console.error(error))
+  })
+
+  //Creates to user from registration page
+  app.post('/submitReg', (req, res) => {
+    //changes passed in password to encrypted version
+    req.body.password = tools.encrypt(req.body.password).encryptedData
+    userCollection.insertOne(req.body)
+      .then(result => {
+        console.log(result)
+        res.render('confirmation')
       })
       .catch(error => console.error(error))
   })

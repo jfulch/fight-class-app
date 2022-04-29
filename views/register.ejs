@@ -1,22 +1,60 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="/css/master.css">
     <title>BJJ Tracking App - Register</title>
-      <%- include('./partials/head'); %>
-  </head>
-  <header>
-  <%- include('./partials/header'); %>
-  </header>
+    <%- include('./partials/head'); %>
+</head>
+<header>
+    <%- include('./partials/header'); %>
+</header>
 
-  <h1>User Page</h1>
-  <body>
-
-    <p>Under Construction</p>
-
-  </body>
-  <footer>
+<body>
+    <div class="container">
+        <h1>Register</h1>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <form action="/submitReg" method="POST" id="regform">
+                        <p>
+                            <label for="fName">First Name:</label>
+                            <input type="text" name="firstName" id="fName" class="form-control">
+                        </p>
+                        <p>
+                            <label for="lName">Last Name:</label>
+                            <input type="text" name="lastName" id="lName" class="form-control">
+                        </p>
+                        <p>
+                            <label for="email">Email:</label>
+                            <input type="email" name="email" id="email" class="form-control">
+                        </p>
+                        <p>
+                            <label for="password">Password:</label>
+                            <input type="password" name="password" id="password" class="form-control">
+                        </p>
+                        <p>
+                            <label for="belt">Belt Rank:</label>
+                            <select name="belt" id="belt" class="form-control">
+                                <option value="White">White</option>
+                                <option value="Blue">Blue</option>
+                                <option value="Purple">Purple</option>
+                                <option value="Brown">Brown</option>
+                                <option value="Black">Black</option>
+                            </select>
+                        </p>
+                        <p>
+                            <button type="submit">Submit Registration</button>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<footer>
     <%- include('./partials/footer'); %>
-  </footer>
+</footer>
+
 </html>
